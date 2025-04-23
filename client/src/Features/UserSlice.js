@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { UsersData } from "../Exampledata";
 import axios from "axios";
 import { react } from "react";
+import * as ENV from "../config";
 
 //const initialState = { value: [] };
 const initialState = {
@@ -18,7 +19,7 @@ export const registerUser = createAsyncThunk(
   "users/registerUser",
   async (userData) => {
     try {
-      const response = await axios.post("http://localhost:3001/registerUser", {
+      const response = await axios.post(`${ENV.SERVER_URL}/registerUser`, {
         name: userData.name,
         email: userData.email,
         password: userData.password,
@@ -34,7 +35,7 @@ export const registerUser = createAsyncThunk(
 
 export const login = createAsyncThunk("users/login", async (userData) => {
   try {
-    const response = await axios.post("http://localhost:3001/login", {
+    const response = await axios.post(`${ENV.SERVER_URL}/login`, {
       email: userData.email,
       password: userData.password,
     });
@@ -51,7 +52,7 @@ export const login = createAsyncThunk("users/login", async (userData) => {
 
 export const logout = createAsyncThunk("/users/logout", async () => {
   try {
-    const response = await axios.post("http://localhost:3001/logout");
+    const response = await axios.post(`${ENV.SERVER_URL}/logout`);
   } catch (error) {}
 });
 

@@ -4,14 +4,14 @@ import express, { json } from "express";
 import UserModel from "./Models/UserModel.js";
 import bcrypt from "bcrypt";
 import PostModel from "./Models/Post.js";
+import * as ENV from "./config.js";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 //Database connection
-const connectString =
-  "mongodb+srv://66S2136294:Admin@postitcluster.e6yrzbr.mongodb.net/postITDb?retryWrites=true&w=majority&appName=postITCluster";
+const connectString = `mongodb+srv://${ENV.DB_USER}:${ENV.DB_PASSWORD}@${ENV.DB_CLUSTER}/${ENV.DB_NAME}?retryWrites=true&w=majority&appName=postITCluster`;
 mongoose.connect(connectString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -131,8 +131,7 @@ app.put("/likePost/:postId", async (req, res) => {
   }
 });
 
-
-
-app.listen(3001, () => {
-  console.log("You are connected");
+const port = ENV.PORT || 3001;
+app.listen(port, () => {
+  console.log(`You are connected at port: ${port}`);
 });
